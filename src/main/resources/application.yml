@@ -1,0 +1,13 @@
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAT3BSBESAIGGMH2WL
+      secret-key: 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
+    region:
+      static: ap-southeast-2
+      auto: false
+
+application:
+  bucket:
+    name:
+      btlwebhd

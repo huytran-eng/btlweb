@@ -1,0 +1,26 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<body><nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">HoiDap</a>
+        <a class="nav-link" href="/question/add" >Đăng câu hỏi</a>
+
+
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+            <div  sec:authorize="!isAuthenticated()" class="navbar-nav ms-auto">
+                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" href="/register">Register</a>
+            </div>
+            <div  sec:authorize="isAuthenticated()"  class="navbar-nav ms-auto">
+                <a class="nav-link" th:href=${"/user/"+#authentication.principal.userId} sec:authentication="principal.username"></a>
+                <a class="nav-link" href="/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

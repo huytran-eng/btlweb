@@ -1,0 +1,57 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="ru"
+      class="h-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>BTL WEB</title>
+  <link th:replace="~{fragments/styles}">
+</head>
+<body class="d-flex flex-column h-100">
+<main class="d-flex flex-column flex-grow-1">
+
+  <div class="container">
+    <div class="row">
+      <div>
+        <form th:method="post" role="form" th:action="@{/update/{id}(id = ${user.userId})}" th:object="${user}">
+
+          <div class="form-group mb-3">
+            <label class="form-label">Username</label>
+            <input class="form-control"
+                   id="username"
+                   name="username"
+                   placeholder="Enter username"
+                   th:field="*{username}"
+                   type="text"
+                   th:value="${user.username}"
+            />
+            <p th:errors="*{username}" class="text-danger"
+               th:if="${#fields.hasErrors('username')}">
+            </p>
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="form-label">Password</label>
+            <input class="form-control"
+                   id="password"
+                   name="password"
+                   placeholder="Enter password"
+                   type="password"
+                   th:value="${user.password}"
+            />
+            
+          </div>
+
+          <div class="form-group mb-3">
+            <button class="btn btn-primary" type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

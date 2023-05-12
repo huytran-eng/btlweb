@@ -1,0 +1,121 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="ru"
+      class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title >BTL WEB</title>
+    <link th:replace="~{fragments/styles}">
+</head>
+<body class="d-flex flex-column h-100">
+<header>
+    <div th:replace="~{fragments/navbar}"></div>
+</header>
+<main class=" container">
+    <div class=" col align-self-center">
+
+        <div >
+
+            <div class="col-md-10 col-lg-8 col-xl-7 bg-white border p-0 h-auto">
+                <div class="content h-auto">
+                    <div class="content-header mt-4 mx-4">
+                        <div class="section-title mb-3 clearfix">
+                            <div class="h3 font-weight-normal float-left">Questions</div>
+                            <a class="float-right btn btn-primary"
+                               th:href="@{/questions/new}">Ask Question</a>
+                        </div>
+                        <div class="search-form-wrapper mb-3 d-flex justify-content-between">
+                            <form class="form" id="question_filter_form" th:action="@{/question}" th:method="get" >
+
+                                <div class="buttons">
+                                    <div class="btn-group mr-2" role="group">
+                                        <button class="btn btn-outline-secondary"
+                                                type="submit"
+                                                name="sort"
+                                                value="NEWEST">
+                                            Newest
+                                        </button>
+                                        <button class="btn btn-outline-secondary"
+                                                type="submit"
+                                                name="sort"
+                                                value="VOTES">
+                                            Most Votes
+                                        </button>
+
+                                    </div>
+
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="questions-list-container border-top">
+
+                    <div class="d-flex float-none question-info px-2 py-3 border-bottom"
+                         th:each="question : ${questions}">
+                        <div class="stats-container text-muted text-center ml-1 mr-3">
+                            <div class="stats">
+                                <div class="vote">
+                                    <div class="votes mb-2 p-1">
+                                              <span id="rating"
+                                                    th:with="rating=${question.upvote.size +question.downvote.size}"
+                                                    th:text="${rating}"
+                                                    class="question_rating text-muted h5 font-weight-bold"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="views small" th:text="${question.getViewsNo}+' views'"></div>
+                        </div>
+                        <div class="question-summary w-100">
+                            <div class="mb-2">
+                                <a class="text-info h5 font-weight-normal"
+                                   th:href="${'/question/' + question.questionId}"
+                                   th:text="${question.title}"></a>
+                            </div>
+                            <div class="mb-1" th:text="${question.content}"></div>
+                            <div class="float-left">
+                                <div class="d-inline-block" th:each="tag : ${question.tags}">
+                                    <a class="mr-1 bg-light small rounded p-1 text-info"
+                                       th:href="${'/question/tag/' + tag.tagName}"
+                                       th:text="${tag.tagName}"></a>
+                                </div>
+                            </div>
+                            <div class="user-info float-right w-25">
+                                <div class="text-muted small user-action-time"
+                                     th:text="'asked ' + ${question.getFormattedDate(question.createdAt, 'd MMM yy hh:mm')}">
+                                </div>
+                                <div class="user-details float-left small">
+                                    <a th:href="${'/user/' + question.user.userId}"
+                                       th:text="${question.user.username}"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${pagequestions.getTotalPages()  > 1}" class="pagination float-right mr-4 my-4">
+                    <nav aria-label="Questions per page">
+                        <ul class="pagination pagination-sm mb-0">
+
+                            <li class="page-item"
+                                th:each="i: ${#numbers.sequence(1, pagequestions.getTotalPages() )}"
+                                th:classappend="${pagequestions.number == i-1} ? active">
+                                <a  th:if="${sort==null}" class="page-link" th:href="@{''(page=${i})}" th:text="${i}"></a>
+                                <a  th:unless="${sort==null}" class="page-link" th:href="@{''(page=${i},sort=${sort})}" th:text="${i}"></a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="align-self-center small text-muted ml-2">per page</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+
+</body>
+</html>

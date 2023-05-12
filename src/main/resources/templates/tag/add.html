@@ -1,0 +1,70 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="ru"
+      class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BTL WEB</title>
+    <link th:replace="~{fragments/styles}">
+</head>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}"></div>
+<main class="d-flex flex-column flex-grow-1">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">Lỗi xảy ra</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Tạo Tag</h3>
+                    </div>
+                    <div class="card-body">
+
+                        <form method="post" role="form" th:action="@{/tag/add}" th:object="${tag}">
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Name</label>
+                                <input class="form-control"
+                                       id="tagName"
+                                       name="tagName"
+                                       placeholder="Enter tag name"
+                                       th:field="*{tagName}"
+                                       type="text"
+                                />
+                                <p th:errors="*{tagName}" class="text-danger"
+                                   th:if="${#fields.hasErrors('tagName')}">
+                                </p>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Description</label>
+                                <input class="form-control"
+                                       id="tagDescription"
+                                       name="tagDescription"
+                                       placeholder="Enter tag description"
+                                       th:field="*{tagDescription}"
+                                       type="text"
+                                />
+                                <p th:errors="*{tagName}" class="text-danger"
+                                   th:if="${#fields.hasErrors('tagName')}">
+                                </p>
+                            </div>
+
+
+                            <div class="form-group mb-3">
+                                <button class="btn btn-primary" type="submit">Tạo</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+</body>
+</html>

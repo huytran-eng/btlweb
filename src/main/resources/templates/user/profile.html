@@ -1,0 +1,50 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+
+      lang="ru" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title th:text="#{common.header.title}">Stack Overflow Clone</title>
+    <link th:replace="~{fragments/styles}">
+</head>
+<body class="d-flex flex-column h-100">
+<header>
+    <div th:replace="~{fragments/navbar}"></div>
+</header>
+<main class=" container">
+    <div class=" col align-self-center">
+        <div class="row d-flex flex-grow-1">
+            <div>
+                <div class="content mx-4 mt-4">
+                    <div class="account-view d-flex p-4">
+
+                        <div class="profile ml-3">
+                            <div class="content-header">
+                                <div class="h2" th:text="${user.username}"></div>
+                            </div>
+                            <div class="content-header">
+                                <div class="h2" th:text="${user.email}"></div>
+                            </div>
+                            <div sec:authorize='isAuthenticated()'
+                                 th:if="${user.userId == #authentication.principal.userId}">
+                                <a th:href="${'/user/edit/' + user.userId}"> edit</a>
+                            </div>
+                            <div  sec:authorize="hasRole('admin')">
+                                <a th:href="${'/user/delete/' + user.userId}"> delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+</body>
+</html>

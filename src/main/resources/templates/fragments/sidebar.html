@@ -1,0 +1,26 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<body>
+<div th:fragment="sidebar" class="left-sidebar float-right sticky-top pt-4 small">
+    <ul class="nav-links pl-0">
+        <li class="nav-item pr-4"
+        >
+            <a href="/" class="nav-link"
+               th:classappend="${module == 'index' ? 'font-weight-bold text-dark' : ''}">Home</a>
+        </li>
+        <li class="nav-item pr-4"
+        >
+            <a href="/question" class="nav-link"
+            >Questions</a>
+        </li>
+
+        <li class="nav-item pr-4"
+        >
+            <a href="/tag" class="nav-link"
+            >Tags</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

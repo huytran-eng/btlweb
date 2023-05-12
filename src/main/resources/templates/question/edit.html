@@ -1,0 +1,74 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="ru" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title >BTL WEB</title>
+    <link th:replace="~{fragments/styles}">
+
+
+</head>
+<body class="d-flex flex-column h-100">
+<header>
+    <div th:replace="~{fragments/navbar}"></div>
+</header>
+<main class=" container">
+    <div class=" col-10 align-self-center">
+        <div class="row d-flex flex-grow-1">
+
+            <div class="col-md-10 col-lg-8 col-xl-7 bg-white border p-0 h-auto">
+                <div class="content m-3">
+                    <div class="section-title mb-3"><h3>Sửa câu hỏi </h3></div>
+                    <div class="form-wrapper">
+                        <form th:action="@{/question}" th:method="PUT" th:object="${question}">
+                            <input type="hidden" th:field="*{questionId}"/>
+                            <input type="hidden" th:field="*{user}"/>
+                            <input type="hidden" th:field="*{tags}"/>
+                            <input type="hidden" th:field="*{upvote}"/>
+                            <input type="hidden" th:field="*{downvote}"/>
+
+                            <div class="form-group">
+                                <label for="question_title"
+                                >Question title</label>
+                                <input id="question_title" type="text" th:field="*{title}"
+                                       name="title" class="form-control">
+                                <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name Error</span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="question_body"
+                                >Question body</label>
+                                <textarea id="question_body" name="body" class="form-control"
+                                          th:field="*{content}" rows="8" cols="12">
+                                </textarea>
+                                <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Name Error</span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" name="submit"
+                                       class="btn btn-primary form-control">
+                            </div>
+                        </form>
+                        <form th:action="@{/question/}+${question.questionId}" th:method="DELETE" th:object="${question}">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-danger form control">Xoa</button>
+
+
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+</body>
+</html>

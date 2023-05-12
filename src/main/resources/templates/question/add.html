@@ -1,0 +1,75 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="ru"
+      class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BTL WEB</title>
+    <link th:replace="~{fragments/styles}">
+
+</head>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}"></div>
+<main class="d-flex flex-column flex-grow-1">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">Lỗi xảy ra</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Tạo câu hỏi</h3>
+                    </div>
+                    <div class="card-body">
+
+
+                        <form method="post" role="form" th:action="@{/question/add}" th:object="${question}"
+                              enctype="multipart/form-data">
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Title</label>
+                                <input class="form-control" placeholder="Enter title" th:field="*{title}" type="text"/>
+                                <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name Error</span>
+
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Content</label>
+                                <textarea id="question_body" name="body" class="form-control"
+                                          th:field="*{content}" rows="8" cols="12">
+                                </textarea>
+                                <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Name Error</span>
+                            </div>
+                            <p>
+                                <input type="file" name="files" accept="image/*" multiple/>
+                            </p>
+                            <div class="d-inline-block " id="tags">
+
+                            </div>
+                            <div>
+                                <input type="text" placeholder="Type something..." id="myInput">
+                                <select id="dropdown" onchange="selectOption()">
+                                </select>
+                            </div>
+                            <span th:if="${#fields.hasErrors('tags')}" th:errors="*{tags}">Name Error</span>
+
+                            <div class="form-group mb-3">
+                                <button class="btn btn-primary" type="submit">Tạo</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+</script>
+</body>
+</html>
