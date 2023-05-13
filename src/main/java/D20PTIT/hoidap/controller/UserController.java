@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 
 public class UserController {
+    @Autowired
     private final UserRepository userRepo;
 
+    @Autowired
     private final PasswordEncoder passwordEncoder;
 
     @ModelAttribute("user")
@@ -80,4 +82,16 @@ public class UserController {
         return "redirect:/";
     }
 
+    @DeleteMapping("/user/delete/{id}")
+    public String deleteUser(Model model, @PathVariable("id") String id, Authentication authentication) {
+        User u = (User) authentication.getPrincipal();
+        String postion =u.getPosition().toString();
+        if (!postion.equals("admin")) {
+            System.out.println("here");
+            return "redirect:/";
+        }
+        System.out.println("xoa theo id "+id);
+        userRepo.deleteById(id);
+        return "redirect:/";
+    }
 }

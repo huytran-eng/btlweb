@@ -9,7 +9,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title th:text="#{common.header.title}">Stack Overflow Clone</title>
+    <title >BTL WEB</title>
     <link th:replace="~{fragments/styles}">
 </head>
 <body class="d-flex flex-column h-100">
@@ -34,8 +34,14 @@
                                  th:if="${user.userId == #authentication.principal.userId}">
                                 <a th:href="${'/user/edit/' + user.userId}"> edit</a>
                             </div>
-                            <div  sec:authorize="hasRole('admin')">
-                                <a th:href="${'/user/delete/' + user.userId}"> delete</a>
+
+                            <div sec:authorize="hasRole('admin')">
+                                <form th:action="@{/user/delete/}+${user.userId}" th:method="DELETE"
+                                      th:object="${user}">
+                                    <button type="submit">delete</button>
+
+                                </form>
+
                             </div>
                         </div>
                     </div>
